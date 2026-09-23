@@ -23,13 +23,17 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
+import com.example.dicerollerapp.ui.theme.DiceRollerAppTheme
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
-            DiceWithButtonAndImage()
+            DiceRollerAppTheme {
+                DiceRollerApp()
+            }
         }
     }
 }
@@ -37,14 +41,13 @@ class MainActivity : ComponentActivity() {
 @Preview
 @Composable
 fun DiceRollerApp() {
-    DiceWithButtonAndImage()
+    DiceWithButtonAndImage(modifier = Modifier
+        .fillMaxSize()
+        .wrapContentSize())
 }
 
 @Composable
-fun DiceWithButtonAndImage(modifier: Modifier = Modifier
-    .fillMaxSize()
-    .wrapContentSize(Alignment.Center)
-) {
+fun DiceWithButtonAndImage(modifier: Modifier = Modifier) {
     var result by remember { mutableStateOf(1) }
     val imageResource = when (result) {
         1 -> R.drawable.ic_dice_1
@@ -64,7 +67,9 @@ fun DiceWithButtonAndImage(modifier: Modifier = Modifier
         )
         Spacer(modifier = Modifier.height(16.dp))
         Button(onClick = { result = (1..6).random() }) {
-            Text(stringResource(R.string.roll))
+            Text(
+                stringResource(R.string.roll),
+                fontSize = 24.sp)
         }
     }
 }
